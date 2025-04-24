@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bp54h0jk1i2g"]
+
+[ext_resource type="PackedScene" uid="uid://c118h88d8dsqd" path="res://scenes/prefabs/room_generator.tscn" id="1_tke5d"]
+[ext_resource type="PackedScene" uid="uid://b1m6qmnbj44gt" path="res://scenes/prefabs/player.tscn" id="1_uhomf"]
+
+[node name="Place" type="Node2D"]
+
+[node name="RoomGenerator" parent="." instance=ExtResource("1_tke5d")]
+position = Vector2(-4000, -3000)
+
+[node name="Player" parent="." instance=ExtResource("1_uhomf")]
