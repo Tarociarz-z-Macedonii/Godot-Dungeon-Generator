@@ -1,0 +1,7 @@
+res://scenes/places/Main.tscn
+res://animations_and_tilesets/tileset.tres
+res://animations_and_tilesets/player_frames.tres
+res://scripts/room_generator.gd
+res://scripts/room_instantiator.gd
+res://scenes/prefabs/room.tscn
+res://scenes/prefabs/player.tscn

@@ -19,4 +19,3 @@ animation = &"idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -3.17891e-07)
 shape = SubResource("RectangleShape2D_tou0u")
-disabled = true

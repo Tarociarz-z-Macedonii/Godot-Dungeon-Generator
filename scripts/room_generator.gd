@@ -1,26 +1,23 @@
 extends Node2D
 
-var room_prefab = preload('res://scenes/prefabs/room.tscn')
-var room_width: int = 500
-var room_height: int =  350
 var rooms_created = [] #
 var end_rooms = [] 
-var room_prefabs = []
 var rooms_to_create_queue = []
 var max_num_rooms = 24
 var min_num_rooms = 20
 var chance_for_room = 0.7
 
 var finished_creating = false
-
+var room_instantiator
 func _ready() -> void:
-	_create(43)
+	_try_to_add_to_neighbours(43) 
 	rooms_created.append(43)
+	room_instantiator = get_node("RoomInstantiator")
 	
 func _process(_delta: float) -> void:
 	if len(rooms_to_create_queue) > 0 and len(rooms_created) < max_num_rooms:
 		var cords = rooms_to_create_queue.pop_front()
-		_create(cords)
+		_try_to_add_to_neighbours(cords) 
 		return
 		
 	on_finished_creating()	
@@ -31,15 +28,14 @@ func on_finished_creating():
 		print(len(rooms_created))
 		if len(rooms_created) <= min_num_rooms:
 			restart()
+			return
+		room_instantiator.instantiate_rooms(rooms_created)
 
 func restart():
 	print('restarted')
 	rooms_created.clear()
 	end_rooms.clear()
-	for room in room_prefabs:
-		room.queue_free()
-	room_prefabs.clear()
-	_create(43)
+	_try_to_add_to_neighbours(43)
 	rooms_created.append(43)
 	finished_creating = false
 
@@ -90,12 +86,5 @@ func _try_to_add_to_neighbours(cords):
 			added_neighbours += 1
 	if added_neighbours == 0:
 		end_rooms.append(cords)
-	#print('created' + str(len(rooms_created)))
 		 
 	
-func _create(cords):
-	var temp_room = room_prefab.instantiate() 
-	add_child(temp_room)
-	room_prefabs.append(temp_room)
-	temp_room.position = Vector2( cords_to_x(cords) * room_width, cords_to_y(cords) * room_height)
-	_try_to_add_to_neighbours(cords) 
