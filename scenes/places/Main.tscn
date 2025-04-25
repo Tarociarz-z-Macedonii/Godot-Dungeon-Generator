@@ -7,7 +7,7 @@
 scale = Vector2(6, 6)
 
 [node name="RoomGenerator" parent="." instance=ExtResource("1_tke5d")]
-position = Vector2(-1920, -1280)
+position = Vector2(-1920, -1760)
 
 [node name="Player" parent="." instance=ExtResource("1_uhomf")]
 scale = Vector2(1, 1)

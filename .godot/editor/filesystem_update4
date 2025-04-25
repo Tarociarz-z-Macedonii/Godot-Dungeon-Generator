@@ -7,3 +7,4 @@ res://scenes/prefabs/room_minimap.tscn
 res://scripts/minimap_displayer.gd
 res://scenes/prefabs/room_generator.tscn
 res://scripts/room_generator.gd
+res://scripts/room_instantiator.gd

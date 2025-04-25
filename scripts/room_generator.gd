@@ -1,5 +1,11 @@
 extends Node2D
 
+var room_px_width = 30
+var room_px_height = 22
+var room_width: int = room_px_width * 16
+var room_height: int =  room_px_height * 16
+
+
 var rooms_created = [] #
 var end_rooms = [] 
 var rooms_to_create_queue = []
@@ -11,8 +17,8 @@ var finished_creating = false
 var room_instantiator
 var minimap_displayer
 func _ready() -> void:
-	_try_to_add_to_neighbours(44) 
-	rooms_created.append(44)
+	_try_to_add_to_neighbours(Vector2(4,4)) 
+	rooms_created.append(Vector2(4,4))
 	room_instantiator = get_node("RoomInstantiator")
 	minimap_displayer = get_node("MinimapDisplayer")
 	
@@ -38,15 +44,9 @@ func restart():
 	print('restarted')
 	rooms_created.clear()
 	end_rooms.clear()
-	_try_to_add_to_neighbours(44)
-	rooms_created.append(44)
+	_try_to_add_to_neighbours(Vector2(4,4))
+	rooms_created.append(Vector2(4,4))
 	finished_creating = false
-
-func cords_to_x(cords):
-	return int(cords/10)
-	
-func cords_to_y(cords):
-	return cords%10
 
 func _is_room_existing(cords):
 	for i in range(len(rooms_created)):
@@ -56,18 +56,18 @@ func _is_room_existing(cords):
 
 func _count_neighbours(cords):
 	var neighbours = 0
-	if _is_room_existing(cords-1):
+	if _is_room_existing(Vector2(cords.x, cords.y - 1)):
 		neighbours += 1
-	if _is_room_existing(cords+1):
+	if _is_room_existing(Vector2(cords.x, cords.y + 1)):
 		neighbours += 1
-	if _is_room_existing(cords-10):
+	if _is_room_existing(Vector2(cords.x - 1, cords.y )):
 		neighbours += 1
-	if _is_room_existing(cords+10):
+	if _is_room_existing(Vector2(cords.x + 1, cords.y )):
 		neighbours += 1
 	return neighbours
 	
 func _try_to_add_to_neighbour(cords):
-	if randf_range(0,1.0) < chance_for_room and not _is_room_existing(cords - 10) and _count_neighbours(cords) < 2:
+	if randf_range(0,1.0) < chance_for_room and not _is_room_existing(cords) and _count_neighbours(cords) < 2:
 		rooms_to_create_queue.push_back(cords)
 		rooms_created.append(cords)
 		return true
@@ -75,17 +75,17 @@ func _try_to_add_to_neighbour(cords):
 
 func _try_to_add_to_neighbours(cords):
 	var added_neighbours = 0
-	if cords - 10 >= 0:
-		if _try_to_add_to_neighbour(cords - 10):
+	if cords.y - 1 >= 0:
+		if _try_to_add_to_neighbour(Vector2(cords.x, cords.y - 1)):
 			added_neighbours += 1
-	if cords + 10 <= 99:
-		if _try_to_add_to_neighbour(cords + 10):
+	if cords.y + 1 <= 9:
+		if _try_to_add_to_neighbour(Vector2(cords.x, cords.y + 1)):
 			added_neighbours += 1
-	if cords_to_y(cords) > cords_to_y(cords - 1) and cords - 1 >= 0:
-		if _try_to_add_to_neighbour(cords -1 ):
+	if cords.x - 1 >= 0:
+		if _try_to_add_to_neighbour(Vector2(cords.x - 1, cords.y )):
 			added_neighbours += 1
-	if cords_to_y(cords) < cords_to_y(cords + 1) and cords + 1 <= 99:
-		if _try_to_add_to_neighbour(cords + 1):
+	if cords.x + 1 <= 9:
+		if _try_to_add_to_neighbour(Vector2(cords.x + 1, cords.y )):
 			added_neighbours += 1
 	if added_neighbours == 0:
 		end_rooms.append(cords)
