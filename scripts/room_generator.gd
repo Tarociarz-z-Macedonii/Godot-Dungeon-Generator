@@ -9,10 +9,12 @@ var chance_for_room = 0.7
 
 var finished_creating = false
 var room_instantiator
+var minimap_displayer
 func _ready() -> void:
-	_try_to_add_to_neighbours(43) 
-	rooms_created.append(43)
+	_try_to_add_to_neighbours(44) 
+	rooms_created.append(44)
 	room_instantiator = get_node("RoomInstantiator")
+	minimap_displayer = get_node("MinimapDisplayer")
 	
 func _process(_delta: float) -> void:
 	if len(rooms_to_create_queue) > 0 and len(rooms_created) < max_num_rooms:
@@ -30,13 +32,14 @@ func on_finished_creating():
 			restart()
 			return
 		room_instantiator.instantiate_rooms(rooms_created)
+		minimap_displayer.draw_minimap(rooms_created)
 
 func restart():
 	print('restarted')
 	rooms_created.clear()
 	end_rooms.clear()
-	_try_to_add_to_neighbours(43)
-	rooms_created.append(43)
+	_try_to_add_to_neighbours(44)
+	rooms_created.append(44)
 	finished_creating = false
 
 func cords_to_x(cords):

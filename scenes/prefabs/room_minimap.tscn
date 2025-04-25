@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dpmywssshyw10"]
+
+[ext_resource type="Texture2D" uid="uid://c4tglggha3bkb" path="res://sprites/sr2c812834cb64f.png" id="1_la4go"]
+
+[node name="TextureRect" type="TextureRect"]
+offset_left = 48.0
+offset_top = 27.0
+offset_right = 112.0
+offset_bottom = 77.0
+texture = ExtResource("1_la4go")
+expand_mode = 1

@@ -1,12 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://c118h88d8dsqd"]
+[gd_scene load_steps=5 format=3 uid="uid://c118h88d8dsqd"]
 
 [ext_resource type="Script" uid="uid://blamu34tj0r6d" path="res://scripts/room_generator.gd" id="1_4n51n"]
 [ext_resource type="Texture2D" uid="uid://dhlsnju2442dq" path="res://icon.svg" id="2_2d16v"]
+[ext_resource type="Script" uid="uid://ky75c37icxv6" path="res://scripts/minimap_displayer.gd" id="3_wya6a"]
+[ext_resource type="Script" uid="uid://dl8n2ark1y8xa" path="res://scripts/room_instantiator.gd" id="4_lb36y"]
 
 [node name="RoomGenerator" type="Node2D"]
-scale = Vector2(2, 2)
 script = ExtResource("1_4n51n")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_2d16v")
+
+[node name="MinimapDisplayer" type="Node2D" parent="."]
+position = Vector2(0, 1)
+script = ExtResource("3_wya6a")
+
+[node name="RoomInstantiator" type="Node2D" parent="."]
+script = ExtResource("4_lb36y")
