@@ -4,19 +4,21 @@ var room_px_width = 30
 var room_px_height = 22
 var room_width: int = room_px_width * 16
 var room_height: int =  room_px_height * 16
-
+var offset_x = 4 * room_width
+var offset_y = 4 * room_height 
 
 var rooms_created = [] #
 var end_rooms = [] 
 var rooms_to_create_queue = []
-var max_num_rooms = 24
-var min_num_rooms = 20
-var chance_for_room = 0.7
+var max_num_rooms = 20
+var min_num_rooms = 19
+var chance_for_room = .5
 
 var finished_creating = false
 var room_instantiator
 var minimap_displayer
 func _ready() -> void:
+	position = Vector2(-offset_x, -offset_y)
 	_try_to_add_to_neighbours(Vector2(4,4)) 
 	rooms_created.append(Vector2(4,4))
 	room_instantiator = get_node("RoomInstantiator")
@@ -48,7 +50,7 @@ func restart():
 	rooms_created.append(Vector2(4,4))
 	finished_creating = false
 
-func _is_room_existing(cords):
+func is_room_existing(cords):
 	for i in range(len(rooms_created)):
 		if cords == rooms_created[i]:
 			return true
@@ -56,18 +58,18 @@ func _is_room_existing(cords):
 
 func _count_neighbours(cords):
 	var neighbours = 0
-	if _is_room_existing(Vector2(cords.x, cords.y - 1)):
+	if is_room_existing(Vector2(cords.x, cords.y - 1)):
 		neighbours += 1
-	if _is_room_existing(Vector2(cords.x, cords.y + 1)):
+	if is_room_existing(Vector2(cords.x, cords.y + 1)):
 		neighbours += 1
-	if _is_room_existing(Vector2(cords.x - 1, cords.y )):
+	if is_room_existing(Vector2(cords.x - 1, cords.y )):
 		neighbours += 1
-	if _is_room_existing(Vector2(cords.x + 1, cords.y )):
+	if is_room_existing(Vector2(cords.x + 1, cords.y )):
 		neighbours += 1
 	return neighbours
 	
 func _try_to_add_to_neighbour(cords):
-	if randf_range(0,1.0) < chance_for_room and not _is_room_existing(cords) and _count_neighbours(cords) < 2:
+	if randf_range(0,1.0) < chance_for_room and not is_room_existing(cords) and _count_neighbours(cords) < 2:
 		rooms_to_create_queue.push_back(cords)
 		rooms_created.append(cords)
 		return true

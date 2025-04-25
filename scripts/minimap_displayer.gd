@@ -1,15 +1,17 @@
 extends Node2D
 
 var room_icon = preload('res://scenes/prefabs/room_minimap.tscn')
-var current_room_icon = preload('res://sprites/current_room_icon.png')
-var visited_room_icon = preload('res://sprites/room_discovered.png')
-var room_width = 30
-var room_height = 22
-var offset_x = 2400 - 240
-var offset_y = 1760.0 + 176
+var current_icon = preload('res://sprites/current_room_icon.png')
+var explored_icon = preload('res://sprites/room_discovered.png')
+var unexplored_icon = preload('res://sprites/unexplored.png')
+
+var minimap_offset_x 
+var minimap_offset_y 
+
 var minimap_rooms = {}
+var minimap_room_types = {}
 var minimap_created = false
-var last_current_cords 
+var last_current_cords = Vector2(-1,-1)
 var room_generator
 var canvas
 var minimap_background
@@ -20,27 +22,56 @@ func _ready() -> void:
 	player = get_node('/root/Place/Player')
 	minimap_background = canvas.get_node('MinimapBackground')
 	minimap_background.size = Vector2(30*10,22*10)
+	minimap_offset_x = room_generator.offset_x + room_generator.room_width/2
+	minimap_offset_y = room_generator.offset_y + room_generator.room_height/2
 	
 func _process(delta: float) -> void:
 	if minimap_created:
-		_update_current_room()
+		_on_room_change()
 	
 func draw_minimap(rooms_created):
-	for room_cords in rooms_created:
+
+	for cords in rooms_created:
+		minimap_room_types[cords] = 'unseen'
 		var temp_icon = room_icon.instantiate()
 		canvas.add_child(temp_icon)
-		minimap_rooms[room_cords] = temp_icon
-		temp_icon.position = Vector2(room_cords.x * room_width, room_cords.y * room_height) 
+		minimap_rooms[cords] = temp_icon
+		temp_icon.position = Vector2(cords.x * room_generator.room_px_width, cords.y * room_generator.room_px_height) 
+	minimap_room_types[Vector2(4,4)] = 'current'
 	minimap_created = true
 		
 func _get_current_room_cords():
-	return Vector2( int((player.position.x + offset_x) / (room_width*16)), int((player.position.y + offset_y) / (room_height*16)))
+	return Vector2( int((player.position.x + minimap_offset_x) / room_generator.room_width), int((player.position.y + minimap_offset_y) / room_generator.room_height))
 
-func _update_current_room():
+func _on_room_change():
 	var current_cords = _get_current_room_cords()
-	print( (player.position.x + offset_x) / (room_width*16)  )
 	if minimap_rooms.get(current_cords) and last_current_cords != current_cords:
-		for key in minimap_rooms:
-			minimap_rooms[key].texture = visited_room_icon
+		_update_room_types(current_cords, last_current_cords)
+		_update_room_icons(current_cords)
 		last_current_cords = current_cords
-		minimap_rooms[current_cords].texture = current_room_icon
+		
+func _give_room_type_unexplored(cords):
+	if room_generator.is_room_existing(cords):
+		if minimap_room_types[cords] == 'unseen': 
+			minimap_room_types[cords] = 'unexplored'
+			
+func _update_room_types(current_cords, last_current_cords):
+	_give_room_type_unexplored(Vector2(current_cords.x - 1,current_cords.y))
+	_give_room_type_unexplored(Vector2(current_cords.x + 1,current_cords.y))
+	_give_room_type_unexplored(Vector2(current_cords.x,current_cords.y - 1))
+	_give_room_type_unexplored(Vector2(current_cords.x,current_cords.y + 1))
+	minimap_room_types[current_cords] = 'current'
+	minimap_room_types[last_current_cords] = 'explored'
+
+func _update_room_icons(cords):
+	for key in minimap_rooms:
+		if minimap_room_types[key] == 'unseen':
+			minimap_rooms[key].visible = false
+		else:
+			minimap_rooms[key].visible = true
+		if minimap_room_types[key] == 'unexplored':
+			minimap_rooms[key].texture = unexplored_icon
+		if minimap_room_types[key] == 'explored':
+			minimap_rooms[key].texture = explored_icon
+		if minimap_room_types[key] == 'current':
+			minimap_rooms[key].texture = current_icon
