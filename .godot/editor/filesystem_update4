@@ -1,10 +1,9 @@
-res://scenes/places/Main.tscn
-res://animations_and_tilesets/player_frames.tres
-res://animations_and_tilesets/tileset.tres
-res://scenes/prefabs/room.tscn
 res://scenes/prefabs/player.tscn
+res://animations_and_tilesets/tileset.tres
+res://animations_and_tilesets/player_frames.tres
+res://scripts/camera.gd
+res://scenes/places/Main.tscn
+res://scenes/prefabs/room.tscn
 res://scenes/prefabs/room_minimap.tscn
-res://scripts/minimap_displayer.gd
 res://scenes/prefabs/room_generator.tscn
-res://scripts/room_generator.gd
-res://scripts/room_instantiator.gd
+res://scripts/player_movement.gd

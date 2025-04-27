@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://b1m6qmnbj44gt"]
+[gd_scene load_steps=5 format=3 uid="uid://b1m6qmnbj44gt"]
 
 [ext_resource type="Script" uid="uid://c74nc3s6nd1nv" path="res://scripts/player_movement.gd" id="1_pv3ct"]
 [ext_resource type="SpriteFrames" uid="uid://delvxuf4vr3ob" path="res://animations_and_tilesets/player_frames.tres" id="1_sfbl0"]
+[ext_resource type="Script" uid="uid://behcitds774qd" path="res://scripts/camera.gd" id="3_n0leu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tou0u"]
 size = Vector2(13, 16)
@@ -12,9 +13,10 @@ script = ExtResource("1_pv3ct")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_sfbl0")
-animation = &"idle"
+animation = &"walk"
 
 [node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("3_n0leu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -3.17891e-07)
