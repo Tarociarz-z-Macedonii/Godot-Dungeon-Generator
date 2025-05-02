@@ -1,6 +1,7 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://butmpoj0vu1mv"]
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://butmpoj0vu1mv"]
 
 [ext_resource type="Texture2D" uid="uid://uq1xnlhpuh21" path="res://sprites/tileset.png" id="1_vt60a"]
+[ext_resource type="PackedScene" uid="uid://dhc2plpmpnbws" path="res://scenes/prefabs/room_enter_hitbox.tscn" id="2_2powo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2powo"]
 texture = ExtResource("1_vt60a")
@@ -95,7 +96,12 @@ texture = ExtResource("1_vt60a")
 1:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 2:8/0 = 0
 2:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:7/0 = 0
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_j8c3x"]
+scenes/1/scene = ExtResource("2_2powo")
 
 [resource]
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_2powo")
+sources/1 = SubResource("TileSetScenesCollectionSource_j8c3x")

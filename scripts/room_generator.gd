@@ -40,7 +40,7 @@ func on_finished_creating():
 			restart()
 			return
 		room_instantiator.instantiate_rooms(rooms_created)
-		minimap_displayer.draw_minimap(rooms_created)
+		minimap_displayer.display_minimap(rooms_created)
 
 func restart():
 	print('restarted')
