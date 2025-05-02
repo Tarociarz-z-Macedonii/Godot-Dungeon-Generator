@@ -11,7 +11,7 @@ var rooms_created = [] #
 var end_rooms = [] 
 var rooms_to_create_queue = []
 var max_num_rooms = 20
-var min_num_rooms = 19
+var min_num_rooms = 20
 var chance_for_room = .5
 
 var finished_creating = false
@@ -36,7 +36,7 @@ func on_finished_creating():
 	if not finished_creating:
 		finished_creating = true
 		print(len(rooms_created))
-		if len(rooms_created) <= min_num_rooms:
+		if len(rooms_created) < min_num_rooms:
 			restart()
 			return
 		room_instantiator.instantiate_rooms(rooms_created)

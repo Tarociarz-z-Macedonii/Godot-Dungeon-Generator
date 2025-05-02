@@ -16,7 +16,6 @@ func _append_rooms() -> void:
 
 func _pick_random_room():
 	var rand = randi_range(0,len(room_prefab_list) - 1)
-	print(rand)
 	return room_prefab_list[rand]
 
 func instantiate_rooms(rooms_created):
@@ -34,20 +33,24 @@ func instantiate_rooms(rooms_created):
 func _make_doors(cords, temp_room):
 	if room_generator.is_room_existing(Vector2(cords.x + 1, cords.y)):
 		temp_room.get_node('WallRightClosed').enabled = false
+		temp_room.is_right_open = true
 	else: 
 		temp_room.get_node('WallRightOpen').enabled = false
 		
 	if room_generator.is_room_existing(Vector2(cords.x - 1, cords.y )):
 		temp_room.get_node('WallLeftClosed').enabled = false
+		temp_room.is_left_open = true
 	else: 
 		temp_room.get_node('WallLeftOpen').enabled = false
 		
 	if room_generator.is_room_existing(Vector2(cords.x, cords.y - 1)):
 		temp_room.get_node('WallTopClosed').enabled = false
+		temp_room.is_top_open = true
 	else: 
 		temp_room.get_node('WallTopOpen').enabled = false
 		
 	if room_generator.is_room_existing(Vector2(cords.x, cords.y + 1)):
 		temp_room.get_node('WallBottomClosed').enabled = false
+		temp_room.is_bottom_open = true
 	else: 
 		temp_room.get_node('WallBottomOpen').enabled = false

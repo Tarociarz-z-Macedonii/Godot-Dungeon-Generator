@@ -56,26 +56,6 @@ tile_set = ExtResource("1_whual")
 tile_map_data = PackedByteArray("AADy/wEAAQAAAAAAAQDy/wAAAQAAAAAAAQDy////AQAAAAAAAQDy//7/AQAAAAAAAQD+//b/AQAAAAAAAQD///b/AQAAAAAAAQAAAPb/AQAAAAAAAQABAPb/AQAAAAAAAQANAP7/AQAAAAAAAQANAP//AQAAAAAAAQANAAAAAQAAAAAAAQANAAEAAQAAAAAAAQD+/wkAAQAAAAAAAQD//wkAAQAAAAAAAQAAAAkAAQAAAAAAAQABAAkAAQAAAAAAAQA=")
 tile_set = ExtResource("1_whual")
 
-[node name="BlockLeft" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AADw//7/AAAEAAUAAADw////AAAAAAEAAADw/wAAAAAAAAEAAADw/wEAAAAEAAYAAAA=")
-enabled = false
-tile_set = ExtResource("1_whual")
-
-[node name="BlockRight" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAPAP7/AAAEAAUAAAAPAP//AAAAAAEAAAAPAAAAAAAAAAEAAAAPAAEAAAAEAAYAAAA=")
-enabled = false
-tile_set = ExtResource("1_whual")
-
-[node name="BlockTop" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAD+//T/AAADAAQAAAD///T/AAABAAAAAAAAAPT/AAABAAAAAAABAPT/AAAEAAQAAAA=")
-enabled = false
-tile_set = ExtResource("1_whual")
-
-[node name="BlockBottom" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAD+/wsAAAADAAQAAAD//wsAAAABAAAAAAAAAAsAAAABAAAAAAABAAsAAAAEAAQAAAA=")
-enabled = false
-tile_set = ExtResource("1_whual")
-
 [connection signal="body_shape_entered" from="Hitboxes/RoomEnterHitbox" to="Hitboxes/RoomEnterHitbox" method="_on_body_shape_entered"]
 [connection signal="body_shape_entered" from="Hitboxes/@Area2D@32497" to="Hitboxes/@Area2D@32497" method="_on_body_shape_entered"]
 [connection signal="body_shape_entered" from="Hitboxes/@Area2D@32498" to="Hitboxes/@Area2D@32498" method="_on_body_shape_entered"]
