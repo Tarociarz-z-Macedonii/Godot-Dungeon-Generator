@@ -7,7 +7,7 @@ var room_height: int =  room_px_height * 16
 var offset_x = 4 * room_width
 var offset_y = 4 * room_height 
 
-var rooms_created = [] #
+var rooms = {} 
 var end_rooms = [] 
 var rooms_to_create_queue = []
 var max_num_rooms = 20
@@ -15,65 +15,43 @@ var min_num_rooms = 20
 var chance_for_room = .5
 
 var finished_creating = false
-var room_instantiator
 var minimap_displayer
+var room = preload("res://scenes/prefabs/room.tscn")
+var room_interior_list = []
+
 func _ready() -> void:
-	position = Vector2(-offset_x, -offset_y)
-	_try_to_add_to_neighbours(Vector2(4,4)) 
-	rooms_created.append(Vector2(4,4))
-	room_instantiator = get_node("RoomInstantiator")
 	minimap_displayer = get_node("MinimapDisplayer")
+	_assign_interiors()
+	position = Vector2(-offset_x, -offset_y)
 	
+	_create_room(Vector2(4,4))
+	_try_to_add_to_neighbours(Vector2(4,4)) 
+
 func _process(_delta: float) -> void:
-	if len(rooms_to_create_queue) > 0 and len(rooms_created) < max_num_rooms:
+	if len(rooms_to_create_queue) > 0 and len(rooms) < max_num_rooms:
 		var cords = rooms_to_create_queue.pop_front()
 		_try_to_add_to_neighbours(cords) 
 		return
 		
 	on_finished_creating()	
 
-func on_finished_creating():
-	if not finished_creating:
-		finished_creating = true
-		print(len(rooms_created))
-		if len(rooms_created) < min_num_rooms:
-			restart()
-			return
-		room_instantiator.instantiate_rooms(rooms_created)
-		minimap_displayer.display_minimap(rooms_created)
+func _assign_interiors() -> void:
+	room_interior_list.append(load('res://scenes/prefabs/rooms/room1.tscn'))
+	room_interior_list.append(load('res://scenes/prefabs/rooms/room2.tscn'))
 
-func restart():
-	print('restarted')
-	rooms_created.clear()
-	end_rooms.clear()
-	_try_to_add_to_neighbours(Vector2(4,4))
-	rooms_created.append(Vector2(4,4))
-	finished_creating = false
+func _create_room(cords):
+	var temp_room = room.instantiate()
+	temp_room.cords = cords
+	temp_room.status = "unseen"
+	temp_room.interior = _pick_random_interior()
+	temp_room.position = Vector2(cords.x * room_width, cords.y * room_height) 
+	#temp_room.instantiate_interior()
+	rooms[cords] = temp_room
+	add_child(temp_room)
 
-func is_room_existing(cords):
-	for i in range(len(rooms_created)):
-		if cords == rooms_created[i]:
-			return true
-	return false
-
-func _count_neighbours(cords):
-	var neighbours = 0
-	if is_room_existing(Vector2(cords.x, cords.y - 1)):
-		neighbours += 1
-	if is_room_existing(Vector2(cords.x, cords.y + 1)):
-		neighbours += 1
-	if is_room_existing(Vector2(cords.x - 1, cords.y )):
-		neighbours += 1
-	if is_room_existing(Vector2(cords.x + 1, cords.y )):
-		neighbours += 1
-	return neighbours
-	
-func _try_to_add_to_neighbour(cords):
-	if randf_range(0,1.0) < chance_for_room and not is_room_existing(cords) and _count_neighbours(cords) < 2:
-		rooms_to_create_queue.push_back(cords)
-		rooms_created.append(cords)
-		return true
-	return false
+func _pick_random_interior():
+	var rand = randi_range(0,len(room_interior_list) - 1)
+	return room_interior_list[rand]
 
 func _try_to_add_to_neighbours(cords):
 	var added_neighbours = 0
@@ -91,5 +69,63 @@ func _try_to_add_to_neighbours(cords):
 			added_neighbours += 1
 	if added_neighbours == 0:
 		end_rooms.append(cords)
-		 
+
+func _try_to_add_to_neighbour(cords):
+	if randf_range(0,1.0) < chance_for_room and not is_room_existing(cords) and _count_neighbours(cords) < 2:
+		rooms_to_create_queue.push_back(cords)
+		_create_room(cords)
+		return true
+	return false
+
+func is_room_existing(cords):
+	for key in rooms:
+		if cords == rooms[key].cords:
+			return true
+	return false
+
+func _count_neighbours(cords):
+	var neighbours = 0
+	if is_room_existing(Vector2(cords.x, cords.y - 1)):
+		neighbours += 1
+	if is_room_existing(Vector2(cords.x, cords.y + 1)):
+		neighbours += 1
+	if is_room_existing(Vector2(cords.x - 1, cords.y )):
+		neighbours += 1
+	if is_room_existing(Vector2(cords.x + 1, cords.y )):
+		neighbours += 1
+	return neighbours
+
+func on_finished_creating():
+	if not finished_creating:
+		finished_creating = true
+		print(len(rooms))
+		if len(rooms) < min_num_rooms:
+			restart()
+			return
+		_assign_final_room_values()
+		minimap_displayer.display_minimap(rooms)
+
+func restart():
+	print('restarted')
+	rooms.clear()
+	end_rooms.clear()
+	_create_room(Vector2(4,4))
+	_try_to_add_to_neighbours(Vector2(4,4)) 
+	finished_creating = false
 	
+func _assign_final_room_values():
+	for key in rooms:
+		rooms[key].instantiate_interior()
+		_assign_openings(key, rooms[key])
+		rooms[key].make_corridors()
+
+
+func _assign_openings(cords, temp_room):
+	if is_room_existing(Vector2(cords.x + 1, cords.y)):
+		temp_room.is_right_open = true	
+	if is_room_existing(Vector2(cords.x - 1, cords.y )):
+		temp_room.is_left_open = true
+	if is_room_existing(Vector2(cords.x, cords.y - 1)):
+		temp_room.is_top_open = true
+	if is_room_existing(Vector2(cords.x, cords.y + 1)):
+		temp_room.is_bottom_open = true

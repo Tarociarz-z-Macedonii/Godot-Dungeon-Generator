@@ -7,3 +7,9 @@ res://scenes/prefabs/room_generator.tscn
 res://scenes/prefabs/room_minimap.tscn
 res://scenes/prefabs/room.tscn
 res://scenes/prefabs/room_enter_hitbox.tscn
+res://scripts/room.gd
+res://scripts/room_generator.gd
+res://scripts/room_instantiator.gd
+res://scripts/minimap_displayer.gd
+res://scenes/prefabs/room_walls.tscn
+res://scripts/room_enter_hitbox.gd
