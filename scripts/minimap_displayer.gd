@@ -9,7 +9,6 @@ var minimap_offset_x
 var minimap_offset_y 
 
 var icons = {}
-var minimap_room_types = {}
 var minimap_created = false
 var last_current_cords := Vector2(4,4)
 var currnet_room_cords := Vector2(4,4)
@@ -31,6 +30,7 @@ func display_minimap(rooms):
 		canvas.add_child(temp_icon)
 		icons[key] = temp_icon
 		temp_icon.position = Vector2(key.x * room_generator.room_px_width, key.y * room_generator.room_px_height) 
+		
 	_update_room_types(Vector2(4,4))
 	_update_room_icons()
 	minimap_created = true
@@ -55,7 +55,6 @@ func _update_room_types(current_cords):
 
 func _update_room_icons():
 	for key in room_generator.rooms:
-		print(room_generator.rooms[key])
 		if room_generator.rooms[key].status == 'unseen':
 			icons[key].visible = false
 		else:

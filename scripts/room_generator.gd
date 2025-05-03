@@ -41,11 +41,6 @@ func _assign_interiors() -> void:
 
 func _create_room(cords):
 	var temp_room = room.instantiate()
-	temp_room.cords = cords
-	temp_room.status = "unseen"
-	temp_room.interior = _pick_random_interior()
-	temp_room.position = Vector2(cords.x * room_width, cords.y * room_height) 
-	#temp_room.instantiate_interior()
 	rooms[cords] = temp_room
 	add_child(temp_room)
 
@@ -79,7 +74,7 @@ func _try_to_add_to_neighbour(cords):
 
 func is_room_existing(cords):
 	for key in rooms:
-		if cords == rooms[key].cords:
+		if cords == key:
 			return true
 	return false
 
@@ -115,6 +110,10 @@ func restart():
 	
 func _assign_final_room_values():
 	for key in rooms:
+		rooms[key].cords = key
+		rooms[key].status = "unseen"
+		rooms[key].position = Vector2(key.x * room_width, key.y * room_height) 
+		rooms[key].interior = _pick_random_interior()
 		rooms[key].instantiate_interior()
 		_assign_openings(key, rooms[key])
 		rooms[key].make_corridors()
