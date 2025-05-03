@@ -13,6 +13,7 @@ var rooms_to_create_queue = []
 var max_num_rooms = 20
 var min_num_rooms = 20
 var chance_for_room = .5
+var max_neighbours = 1
 
 var finished_creating = false
 var minimap_displayer
@@ -66,7 +67,7 @@ func _try_to_add_to_neighbours(cords):
 		end_rooms.append(cords)
 
 func _try_to_add_to_neighbour(cords):
-	if randf_range(0,1.0) < chance_for_room and not is_room_existing(cords) and _count_neighbours(cords) < 2:
+	if randf_range(0,1.0) < chance_for_room and not is_room_existing(cords) and _count_neighbours(cords) <= max_neighbours:
 		rooms_to_create_queue.push_back(cords)
 		_create_room(cords)
 		return true

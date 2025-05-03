@@ -73,20 +73,3 @@ tile_set = ExtResource("1_xxn8f")
 tile_map_data = PackedByteArray("AAD+/wsAAAADAAQAAAD//wsAAAABAAAAAAAAAAsAAAABAAAAAAABAAsAAAAEAAQAAAA=")
 enabled = false
 tile_set = ExtResource("1_xxn8f")
-
-[connection signal="body_shape_entered" from="Hitboxes/RoomEnterHitbox" to="Hitboxes/RoomEnterHitbox" method="_on_body_shape_entered"]
-[connection signal="body_shape_entered" from="Hitboxes/@Area2D@50656" to="Hitboxes/@Area2D@50656" method="_on_body_shape_entered"]
-[connection signal="body_shape_entered" from="Hitboxes/@Area2D@50657" to="Hitboxes/@Area2D@50657" method="_on_body_shape_entered"]
-[connection signal="body_shape_entered" from="Hitboxes/@Area2D@50658" to="Hitboxes/@Area2D@50658" method="_on_body_shape_entered"]
-[connection signal="body_shape_entered" from="Hitboxes/@Area2D@50659" to="Hitboxes/@Area2D@50659" method="_on_body_shape_entered"]
-[connection signal="body_shape_entered" from="Hitboxes/@Area2D@50660" to="Hitboxes/@Area2D@50660" method="_on_body_shape_entered"]
-[connection signal="body_shape_entered" from="Hitboxes/@Area2D@50661" to="Hitboxes/@Area2D@50661" method="_on_body_shape_entered"]
-[connection signal="body_shape_entered" from="Hitboxes/@Area2D@50662" to="Hitboxes/@Area2D@50662" method="_on_body_shape_entered"]
-[connection signal="body_shape_entered" from="Hitboxes/@Area2D@50663" to="Hitboxes/@Area2D@50663" method="_on_body_shape_entered"]
-[connection signal="body_shape_entered" from="Hitboxes/@Area2D@50664" to="Hitboxes/@Area2D@50664" method="_on_body_shape_entered"]
-[connection signal="body_shape_entered" from="Hitboxes/@Area2D@50665" to="Hitboxes/@Area2D@50665" method="_on_body_shape_entered"]
-[connection signal="body_shape_entered" from="Hitboxes/@Area2D@50666" to="Hitboxes/@Area2D@50666" method="_on_body_shape_entered"]
-[connection signal="body_shape_entered" from="Hitboxes/@Area2D@50667" to="Hitboxes/@Area2D@50667" method="_on_body_shape_entered"]
-[connection signal="body_shape_entered" from="Hitboxes/@Area2D@50668" to="Hitboxes/@Area2D@50668" method="_on_body_shape_entered"]
-[connection signal="body_shape_entered" from="Hitboxes/@Area2D@50669" to="Hitboxes/@Area2D@50669" method="_on_body_shape_entered"]
-[connection signal="body_shape_entered" from="Hitboxes/@Area2D@50670" to="Hitboxes/@Area2D@50670" method="_on_body_shape_entered"]

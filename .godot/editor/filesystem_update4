@@ -13,3 +13,7 @@ res://scripts/room_instantiator.gd
 res://scripts/minimap_displayer.gd
 res://scenes/prefabs/room_walls.tscn
 res://scripts/room_enter_hitbox.gd
+res://scenes/prefabs/enemy.tscn
+res://scripts/enemy.gd
+res://scenes/prefabs/rooms/room1.tscn
+res://scenes/prefabs/rooms/room2.tscn
