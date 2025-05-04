@@ -1,3 +1,4 @@
+Node2D
 TileMapLayer
 Sprite2D
 CharacterBody2D
@@ -6,4 +7,3 @@ Area2D
 Panel
 CanvasLayer
 TextureRect
-Node2D

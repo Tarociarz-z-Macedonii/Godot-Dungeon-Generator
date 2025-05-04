@@ -14,7 +14,7 @@ func _physics_process(_delta):
 	move_and_slide()
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("Kill") and randi_range(1, 5) == 1:
+	if Input.is_action_just_pressed("Kill") and randi_range(1, 2) == 1:
 		death()
 
 func death():

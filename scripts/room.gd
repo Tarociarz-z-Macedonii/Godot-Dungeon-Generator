@@ -2,6 +2,7 @@ extends Node2D
 
 var cords: Vector2
 var status: String
+var type
 var interior: PackedScene
 var interior_instance: Node2D
 var walls: PackedScene = preload("res://scenes/prefabs/room_walls.tscn")
@@ -20,10 +21,12 @@ var block_top
 
 var room_generator
 var minimap_displayer
+var room_list
 
 func _ready() -> void:
 	room_generator = get_node("/root/Place/RoomGenerator")
 	minimap_displayer = get_node("/root/Place/RoomGenerator/MinimapDisplayer")
+	room_list = room_generator.get_node("RoomList")
 
 func block_doors():
 	block_left.enabled = is_left_open
@@ -38,6 +41,7 @@ func unblock_doors():
 	block_top.enabled = false
 
 func instantiate_interior():
+	interior = room_list.pick_random(room_list.interiors[type])
 	interior_instance = interior.instantiate()
 	wall_instance = walls.instantiate()
 	add_child(interior_instance)
@@ -63,14 +67,17 @@ func on_hitbox_enter():
 		minimap_displayer.currnet_room_cords = cords
 		if room_generator.rooms[cords].status == 'unexplored':
 			print('Entered First Time')
-			var enemies_layer: TileMapLayer = interior_instance.get_node("Enemies")
-			enemies_layer.enabled = true
-			enemy_count = len(enemies_layer.get_used_cells())
-			
-			are_enemies_in_room = true
-			block_doors()
+			_on_enemy_room_enter()
 		minimap_displayer.on_room_change(cords)
 
+func _on_enemy_room_enter():
+	if type == Enums.RoomType.ENEMY1:
+		var enemies_layer: TileMapLayer = interior_instance.get_node("Enemies")
+		enemies_layer.enabled = true
+		enemy_count = len(enemies_layer.get_used_cells())
+		are_enemies_in_room = true
+		block_doors()
+		
 func on_enemy_death():
 	enemy_count -= 1
 	print(enemy_count)

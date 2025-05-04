@@ -8,7 +8,7 @@ var offset_x = 4 * room_width
 var offset_y = 4 * room_height 
 
 var rooms = {} 
-var end_rooms = [] 
+var end_rooms = []
 var rooms_to_create_queue = []
 var max_num_rooms = 20
 var min_num_rooms = 20
@@ -18,11 +18,9 @@ var max_neighbours = 1
 var finished_creating = false
 var minimap_displayer
 var room = preload("res://scenes/prefabs/room.tscn")
-var room_interior_list = []
 
 func _ready() -> void:
 	minimap_displayer = get_node("MinimapDisplayer")
-	_assign_interiors()
 	position = Vector2(-offset_x, -offset_y)
 	
 	_create_room(Vector2(4,4))
@@ -36,18 +34,10 @@ func _process(_delta: float) -> void:
 		
 	on_finished_creating()	
 
-func _assign_interiors() -> void:
-	room_interior_list.append(load('res://scenes/prefabs/rooms/room1.tscn'))
-	room_interior_list.append(load('res://scenes/prefabs/rooms/room2.tscn'))
-
 func _create_room(cords):
 	var temp_room = room.instantiate()
 	rooms[cords] = temp_room
 	add_child(temp_room)
-
-func _pick_random_interior():
-	var rand = randi_range(0,len(room_interior_list) - 1)
-	return room_interior_list[rand]
 
 func _try_to_add_to_neighbours(cords):
 	var added_neighbours = 0
@@ -64,7 +54,7 @@ func _try_to_add_to_neighbours(cords):
 		if _try_to_add_to_neighbour(Vector2(cords.x + 1, cords.y )):
 			added_neighbours += 1
 	if added_neighbours == 0:
-		end_rooms.append(cords)
+		end_rooms.push_back(cords)
 
 func _try_to_add_to_neighbour(cords):
 	if randf_range(0,1.0) < chance_for_room and not is_room_existing(cords) and _count_neighbours(cords) <= max_neighbours:
@@ -113,12 +103,15 @@ func _assign_final_room_values():
 	for key in rooms:
 		rooms[key].cords = key
 		rooms[key].status = "unseen"
+		rooms[key].type = Enums.RoomType.ENEMY1
 		rooms[key].position = Vector2(key.x * room_width, key.y * room_height) 
-		rooms[key].interior = _pick_random_interior()
+	print("EndRooms: " + str(len(end_rooms)))
+	var end_room_cords = end_rooms.pop_front()
+	rooms[end_room_cords].type = Enums.RoomType.CHEST1
+	for key in rooms:
 		rooms[key].instantiate_interior()
 		_assign_openings(key, rooms[key])
 		rooms[key].make_corridors()
-
 
 func _assign_openings(cords, temp_room):
 	if is_room_existing(Vector2(cords.x + 1, cords.y)):

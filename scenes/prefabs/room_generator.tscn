@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://c118h88d8dsqd"]
+[gd_scene load_steps=4 format=3 uid="uid://c118h88d8dsqd"]
 
 [ext_resource type="Script" uid="uid://blamu34tj0r6d" path="res://scripts/room_generator.gd" id="1_4n51n"]
+[ext_resource type="Script" uid="uid://dgdxqrccjjaen" path="res://scripts/room_list.gd" id="3_87opg"]
 [ext_resource type="Script" uid="uid://ky75c37icxv6" path="res://scripts/minimap_displayer.gd" id="3_wya6a"]
 
 [node name="RoomGenerator" type="Node2D"]
@@ -9,3 +10,6 @@ script = ExtResource("1_4n51n")
 [node name="MinimapDisplayer" type="Node2D" parent="."]
 position = Vector2(0, 1)
 script = ExtResource("3_wya6a")
+
+[node name="RoomList" type="Node2D" parent="."]
+script = ExtResource("3_87opg")
