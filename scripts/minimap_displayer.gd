@@ -39,9 +39,9 @@ func display_minimap(rooms):
 	
 func pick_icon(type):
 	match type:
-		Enums.RoomType.CHEST1:
+		Enums.RoomType.CHEST:
 			return chest_icon
-		Enums.RoomType.ENEMY1:
+		Enums.RoomType.ENEMY:
 			return null
 
 func on_room_change(current_cords):

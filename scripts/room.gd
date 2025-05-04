@@ -2,7 +2,8 @@ extends Node2D
 
 var cords: Vector2
 var status: String
-var type
+var type: Enums.RoomType
+var level: int
 var interior: PackedScene
 var interior_instance: Node2D
 var walls: PackedScene = preload("res://scenes/prefabs/room_walls.tscn")
@@ -41,7 +42,7 @@ func unblock_doors():
 	block_top.enabled = false
 
 func instantiate_interior():
-	interior = room_list.pick_random(room_list.interiors[type])
+	interior = room_list.pick_random( room_list.pick_interior_array(type, level) )
 	interior_instance = interior.instantiate()
 	wall_instance = walls.instantiate()
 	add_child(interior_instance)
@@ -71,7 +72,7 @@ func on_hitbox_enter():
 		minimap_displayer.on_room_change(cords)
 
 func _on_enemy_room_enter():
-	if type == Enums.RoomType.ENEMY1:
+	if type == Enums.RoomType.ENEMY:
 		var enemies_layer: TileMapLayer = interior_instance.get_node("Enemies")
 		enemies_layer.enabled = true
 		enemy_count = len(enemies_layer.get_used_cells())

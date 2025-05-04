@@ -1,21 +1,22 @@
 extends Node2D
 
-var room_px_width = 30
-var room_px_height = 22
+var room_px_width: int = 30
+var room_px_height: int = 22
 var room_width: int = room_px_width * 16
 var room_height: int =  room_px_height * 16
-var offset_x = 4 * room_width
-var offset_y = 4 * room_height 
+var offset_x: int = 4 * room_width
+var offset_y: int = 4 * room_height 
 
 var rooms = {} 
 var end_rooms = []
 var rooms_to_create_queue = []
-var max_num_rooms = 20
-var min_num_rooms = 20
-var chance_for_room = .5
-var max_neighbours = 1
+var max_num_rooms: int = 20
+var min_num_rooms: int  = 20
+var chance_for_room: float  = 0.5
+var max_neighbours: int  = 1
+var room_level: int  = 1
 
-var finished_creating = false
+var finished_creating := false
 var minimap_displayer
 var room = preload("res://scenes/prefabs/room.tscn")
 
@@ -103,11 +104,12 @@ func _assign_final_room_values():
 	for key in rooms:
 		rooms[key].cords = key
 		rooms[key].status = "unseen"
-		rooms[key].type = Enums.RoomType.ENEMY1
+		rooms[key].type = Enums.RoomType.ENEMY
+		rooms[key].level = room_level
 		rooms[key].position = Vector2(key.x * room_width, key.y * room_height) 
 	print("EndRooms: " + str(len(end_rooms)))
 	var end_room_cords = end_rooms.pop_front()
-	rooms[end_room_cords].type = Enums.RoomType.CHEST1
+	rooms[end_room_cords].type = Enums.RoomType.CHEST
 	for key in rooms:
 		rooms[key].instantiate_interior()
 		_assign_openings(key, rooms[key])
