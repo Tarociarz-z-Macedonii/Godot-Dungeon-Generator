@@ -4,6 +4,7 @@ var room_icon = preload('res://scenes/prefabs/room_minimap.tscn')
 var current_icon = preload('res://sprites/current_room_icon.png')
 var explored_icon = preload('res://sprites/room_discovered.png')
 var unexplored_icon = preload('res://sprites/unexplored.png')
+var chest_icon = preload("res://sprites/chest_icon.png")
 
 var minimap_offset_x 
 var minimap_offset_y 
@@ -28,12 +29,20 @@ func display_minimap(rooms):
 	for key in rooms:
 		var temp_icon = room_icon.instantiate()
 		canvas.add_child(temp_icon)
+		temp_icon.get_child(0).texture = pick_icon(rooms[key].type)
 		icons[key] = temp_icon
 		temp_icon.position = Vector2(key.x * room_generator.room_px_width, key.y * room_generator.room_px_height) 
 		
 	_update_room_types(Vector2(4,4))
 	_update_room_icons()
 	minimap_created = true
+	
+func pick_icon(type):
+	match type:
+		Enums.RoomType.CHEST1:
+			return chest_icon
+		Enums.RoomType.ENEMY1:
+			return null
 
 func on_room_change(current_cords):
 	_update_room_types(current_cords)

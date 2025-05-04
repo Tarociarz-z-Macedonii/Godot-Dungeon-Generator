@@ -85,7 +85,7 @@ func on_finished_creating():
 	if not finished_creating:
 		finished_creating = true
 		print(len(rooms))
-		if len(rooms) < min_num_rooms:
+		if len(rooms) < min_num_rooms or len(end_rooms) < 2:
 			restart()
 			return
 		_assign_final_room_values()

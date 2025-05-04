@@ -1,3 +1,4 @@
+TextureRect
 Node2D
 TileMapLayer
 Sprite2D
@@ -6,4 +7,3 @@ CollisionShape2D
 Area2D
 Panel
 CanvasLayer
-TextureRect

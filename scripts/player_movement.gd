@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-var current_speed: float = 650
+var current_speed: float = 650 * 3
 var animator: AnimatedSprite2D
 
 func _ready() -> void:

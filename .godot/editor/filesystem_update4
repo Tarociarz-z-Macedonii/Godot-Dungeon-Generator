@@ -14,3 +14,6 @@ res://scenes/prefabs/room.tscn
 res://scenes/prefabs/rooms/room1.tscn
 res://scenes/prefabs/rooms/room2.tscn
 res://scripts/enemy.gd
+res://scripts/player_movement.gd
+res://scenes/prefabs/room_minimap.tscn
+res://scripts/minimap_displayer.gd
