@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhc2plpmpnbws"]
+
+[ext_resource type="Script" uid="uid://bguvuiup857oj" path="res://scripts/hitboxes/room_entrence.gd" id="1_733ne"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ejips"]
+
+[node name="RoomEnterHitbox" type="Area2D"]
+script = ExtResource("1_733ne")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ejips")
+
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

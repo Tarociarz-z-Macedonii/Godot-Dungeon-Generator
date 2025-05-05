@@ -1,9 +1,9 @@
+CollisionShape2D
+Area2D
+TileMapLayer
 CharacterBody2D
 TextureRect
 Node2D
-TileMapLayer
 Sprite2D
-CollisionShape2D
-Area2D
 Panel
 CanvasLayer

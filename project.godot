@@ -17,7 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Enums="*res://scripts/enums.gd"
+Enums="*res://scripts/global/enums.gd"
+SceneManager="*res://scripts/global/scene_manager.gd"
 
 [display]
 

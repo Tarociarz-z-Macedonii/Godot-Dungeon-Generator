@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://dpmywssshyw10"]
+
+[ext_resource type="Texture2D" uid="uid://05ap3px3mlpc" path="res://sprites/dungeon_generation/explored.png" id="1_la4go"]
+
+[node name="TextureRect" type="TextureRect"]
+offset_left = 48.0
+offset_top = 27.0
+offset_right = 78.0
+offset_bottom = 49.0
+texture = ExtResource("1_la4go")
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 1.0
+offset_right = 25.0
+offset_bottom = 21.0
+expand_mode = 1

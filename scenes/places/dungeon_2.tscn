@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://dqigcytq54ykv"]
+
+[ext_resource type="PackedScene" uid="uid://c118h88d8dsqd" path="res://scenes/prefabs/room_generator/room_generator.tscn" id="1_ud57i"]
+[ext_resource type="PackedScene" uid="uid://b1m6qmnbj44gt" path="res://scenes/prefabs/player.tscn" id="2_6wipb"]
+
+[node name="Place" type="Node2D"]
+scale = Vector2(6, 6)
+
+[node name="RoomGenerator" parent="." instance=ExtResource("1_ud57i")]
+max_num_rooms = 18
+min_num_rooms = 18
+chance_for_room = 0.65
+min_starting_cords = Vector2i(-1, -1)
+max_starting_cords = Vector2i(1, 1)
+max_x_grid = 3
+min_x_grid = -3
+max_y_grid = 3
+min_y_grid = -3
+min_chest_room_num = 2
+max_chest_room_num = 3
+min_end_rooms = 5
+
+[node name="Player" parent="." instance=ExtResource("2_6wipb")]
+scale = Vector2(1, 1)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MinimapBackground" type="Panel" parent="CanvasLayer"]
+z_index = -1
+offset_right = 40.0
+offset_bottom = 40.0
