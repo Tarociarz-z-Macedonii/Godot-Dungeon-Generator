@@ -12,8 +12,8 @@ var minimap_offset_y
 
 var icons = {}
 var minimap_created = false
-var last_current_cords: Vector2 
-var currnet_room_cords: Vector2 
+var last_current_cords: Vector2i
+var currnet_room_cords: Vector2i
 var room_gen
 var canvas
 var minimap_background
@@ -62,10 +62,10 @@ func _give_room_type_unexplored(cords):
 			room_gen.rooms[cords].status = 'unexplored'
 
 func _update_room_types(current_cords):
-	_give_room_type_unexplored(Vector2(current_cords.x - 1,current_cords.y))
-	_give_room_type_unexplored(Vector2(current_cords.x + 1,current_cords.y))
-	_give_room_type_unexplored(Vector2(current_cords.x,current_cords.y - 1))
-	_give_room_type_unexplored(Vector2(current_cords.x,current_cords.y + 1))
+	_give_room_type_unexplored(Vector2i(current_cords.x - 1,current_cords.y))
+	_give_room_type_unexplored(Vector2i(current_cords.x + 1,current_cords.y))
+	_give_room_type_unexplored(Vector2i(current_cords.x,current_cords.y - 1))
+	_give_room_type_unexplored(Vector2i(current_cords.x,current_cords.y + 1))
 	room_gen.rooms[last_current_cords].status = 'explored'
 	room_gen.rooms[current_cords].status = 'current'
 

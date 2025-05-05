@@ -7,7 +7,7 @@ extends Node2D
 @export var room_level: int  = 1
 @export var room_cell_width: int = 30
 @export var room_cell_height: int = 22
-@export var starting_cords := Vector2(0,0)
+@export var starting_cords := Vector2i(0,0)
 @export var max_x_grid: int = 4 #inclusive
 @export var min_x_grid: int = -4 #inclusive
 @export var max_y_grid: int = 4 #inclusive
@@ -24,12 +24,14 @@ var finished_creating := false
 var minimap_displayer
 var room_width: int = room_cell_width * 16
 var room_height: int =  room_cell_height * 16
-var offset_x: int = starting_cords.x * -room_width
-var offset_y: int = starting_cords.y * -room_height 
+var offset_x: int 
+var offset_y: int 
 var chest_room_num
 
 func _ready() -> void:
 	minimap_displayer = get_node("MinimapDisplayer")
+	offset_x = starting_cords.x * -room_width
+	offset_y = starting_cords.y * -room_height
 	position = Vector2(offset_x, offset_y)
 	
 	_create_room(starting_cords)
@@ -52,13 +54,13 @@ func _create_room(cords):
 func _try_to_add_to_neighbours(cords):
 	added_neighbours = 0
 	if cords.x + 1 <= max_x_grid:
-		_try_to_add_to_neighbour(Vector2(cords.x + 1, cords.y ))
+		_try_to_add_to_neighbour(Vector2i(cords.x + 1, cords.y ))
 	if cords.x - 1 >= min_x_grid:
-		_try_to_add_to_neighbour(Vector2(cords.x - 1, cords.y ))
+		_try_to_add_to_neighbour(Vector2i(cords.x - 1, cords.y ))
 	if cords.y + 1 <= max_y_grid:
-		_try_to_add_to_neighbour(Vector2(cords.x, cords.y + 1))
+		_try_to_add_to_neighbour(Vector2i(cords.x, cords.y + 1))
 	if cords.y - 1 >= min_y_grid:
-		_try_to_add_to_neighbour(Vector2(cords.x, cords.y - 1))
+		_try_to_add_to_neighbour(Vector2i(cords.x, cords.y - 1))
 	if added_neighbours == 0:
 		end_rooms.push_back(cords)
 
@@ -79,13 +81,13 @@ func is_room_existing(cords):
 
 func _count_neighbours(cords):
 	var neighbours = 0
-	if is_room_existing(Vector2(cords.x, cords.y - 1)):
+	if is_room_existing(Vector2i(cords.x, cords.y - 1)):
 		neighbours += 1
-	if is_room_existing(Vector2(cords.x, cords.y + 1)):
+	if is_room_existing(Vector2i(cords.x, cords.y + 1)):
 		neighbours += 1
-	if is_room_existing(Vector2(cords.x - 1, cords.y )):
+	if is_room_existing(Vector2i(cords.x - 1, cords.y )):
 		neighbours += 1
-	if is_room_existing(Vector2(cords.x + 1, cords.y )):
+	if is_room_existing(Vector2i(cords.x + 1, cords.y )):
 		neighbours += 1
 	return neighbours
 
@@ -111,7 +113,7 @@ func _assign_final_room_values():
 		rooms[key].cords = key
 		rooms[key].status = "unexplored"
 		rooms[key].level = room_level
-		rooms[key].position = Vector2(key.x * room_width, key.y * room_height) 
+		rooms[key].position = Vector2i(key.x * room_width, key.y * room_height) 
 		rooms[key].instantiate_interior()
 		_assign_openings(key, rooms[key])
 		rooms[key].make_corridors()
@@ -129,11 +131,11 @@ func _assign_room_types():
 			end_rooms.remove_at(rand_index)
 
 func _assign_openings(cords, temp_room):
-	if is_room_existing(Vector2(cords.x + 1, cords.y)):
+	if is_room_existing(Vector2i(cords.x + 1, cords.y)):
 		temp_room.is_right_open = true	
-	if is_room_existing(Vector2(cords.x - 1, cords.y )):
+	if is_room_existing(Vector2i(cords.x - 1, cords.y )):
 		temp_room.is_left_open = true
-	if is_room_existing(Vector2(cords.x, cords.y - 1)):
+	if is_room_existing(Vector2i(cords.x, cords.y - 1)):
 		temp_room.is_top_open = true
-	if is_room_existing(Vector2(cords.x, cords.y + 1)):
+	if is_room_existing(Vector2i(cords.x, cords.y + 1)):
 		temp_room.is_bottom_open = true

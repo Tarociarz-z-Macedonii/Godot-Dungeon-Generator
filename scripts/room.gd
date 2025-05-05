@@ -1,6 +1,6 @@
 extends Node2D
 
-var cords: Vector2
+var cords: Vector2i
 var status: String
 var type: Enums.RoomType
 var level: int

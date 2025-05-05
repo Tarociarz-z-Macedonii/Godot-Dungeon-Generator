@@ -10,6 +10,6 @@ tile_map_data = PackedByteArray("AADy//b/AAABAAEAAADy//f/AAABAAEAAADy//j/AAABAAE
 tile_set = ExtResource("1_rn6or")
 
 [node name="Enemies" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAAAPj/AQAAAAAAAgD1////AQAAAAAAAgD//wYAAQAAAAAAAgAKAP3/AQAAAAAAAgD7/wAAAQAAAAAAAwA=")
+tile_map_data = PackedByteArray("AAAAAPj/AQAAAAAAAgD1////AQAAAAAAAgD//wYAAQAAAAAAAgAKAP3/AQAAAAAAAgD//wAAAQAAAAAAAwA=")
 enabled = false
 tile_set = ExtResource("1_rn6or")

@@ -7,6 +7,7 @@
 scale = Vector2(6, 6)
 
 [node name="RoomGenerator" parent="." instance=ExtResource("1_tke5d")]
+starting_cords = Vector2i(2, 2)
 
 [node name="Player" parent="." instance=ExtResource("1_uhomf")]
 scale = Vector2(1, 1)
