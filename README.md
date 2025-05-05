@@ -23,10 +23,10 @@ drag res://scenes/prefabs/room_generator/room_generator.tscn into the main scene
 
 # Customization
 
-## Adjusting Room Generation
+### Adjusting Room Generation
 edit parameters in res://scenes/prefabs/room_generator/room_generator.tscn 
 
-## Adding New Rooms
+### Adding New Rooms
 Add room scenes to res://scenes/prefabs/rooms/...
 (Note that if it is room with normal enemies it must have TileMapLayer named "Enemies", if it is boss room it must have TileMapLayer named "Enemies" and "Entrence")
 and load them and append them to array in res://scripts/room_generation/room_list.gd script
