@@ -1,4 +1,4 @@
-#Overview
+**Overview**
 This is a procedural dungeon generator for Godot Engine that creates Binding of Isaac-style rooms and layouts. The system generates random dungeon levels with interconnected rooms, including special room types (start, boss, treasure, etc.) and ensures all rooms are accessible.
 
 #Features
