@@ -12,19 +12,23 @@ var minimap_offset_y
 
 var icons = {}
 var minimap_created = false
-var last_current_cords := Vector2(4,4)
-var currnet_room_cords := Vector2(4,4)
-var room_generator
+var last_current_cords: Vector2 
+var currnet_room_cords: Vector2 
+var room_gen
 var canvas
 var minimap_background
 var player
 
 func _ready() -> void:
-	room_generator = get_node('../')
+	room_gen = get_node('../')
 	canvas = get_node('/root/Place/CanvasLayer')
 	player = get_node('/root/Place/Player')
 	minimap_background = canvas.get_node('MinimapBackground')
-	minimap_background.size = Vector2(30*10,22*10)
+	last_current_cords = room_gen.starting_cords
+	currnet_room_cords = room_gen.starting_cords
+	var grid_width = abs(room_gen.max_x_grid - room_gen.min_x_grid) + 1
+	var grid_height = abs(room_gen.max_y_grid - room_gen.min_y_grid) + 1
+	minimap_background.size = Vector2(room_gen.room_cell_width * grid_width, room_gen.room_cell_height * grid_height)
 	
 func display_minimap(rooms):
 	for key in rooms:
@@ -32,9 +36,9 @@ func display_minimap(rooms):
 		canvas.add_child(temp_icon)
 		temp_icon.get_child(0).texture = pick_icon(rooms[key].type)
 		icons[key] = temp_icon
-		temp_icon.position = Vector2(key.x * room_generator.room_px_width, key.y * room_generator.room_px_height) 
+		temp_icon.position = Vector2((key.x - room_gen.min_x_grid) * room_gen.room_cell_width, (key.y - room_gen.min_y_grid) * room_gen.room_cell_height) 
 		
-	_update_room_types(Vector2(4,4))
+	_update_room_types(room_gen.starting_cords)
 	_update_room_icons()
 	minimap_created = true
 	
@@ -53,27 +57,27 @@ func on_room_change(current_cords):
 	last_current_cords = current_cords
 
 func _give_room_type_unexplored(cords):
-	if room_generator.is_room_existing(cords):
-		if room_generator.rooms[cords].status == 'unseen': 
-			room_generator.rooms[cords].status = 'unexplored'
+	if room_gen.is_room_existing(cords):
+		if room_gen.rooms[cords].status == 'unseen': 
+			room_gen.rooms[cords].status = 'unexplored'
 
 func _update_room_types(current_cords):
 	_give_room_type_unexplored(Vector2(current_cords.x - 1,current_cords.y))
 	_give_room_type_unexplored(Vector2(current_cords.x + 1,current_cords.y))
 	_give_room_type_unexplored(Vector2(current_cords.x,current_cords.y - 1))
 	_give_room_type_unexplored(Vector2(current_cords.x,current_cords.y + 1))
-	room_generator.rooms[last_current_cords].status = 'explored'
-	room_generator.rooms[current_cords].status = 'current'
+	room_gen.rooms[last_current_cords].status = 'explored'
+	room_gen.rooms[current_cords].status = 'current'
 
 func _update_room_icons():
-	for key in room_generator.rooms:
-		if room_generator.rooms[key].status == 'unseen':
+	for key in room_gen.rooms:
+		if room_gen.rooms[key].status == 'unseen':
 			icons[key].visible = false
 		else:
 			icons[key].visible = true
-		if room_generator.rooms[key].status == 'unexplored':
+		if room_gen.rooms[key].status == 'unexplored':
 			icons[key].texture = unexplored_icon
-		if room_generator.rooms[key].status == 'explored':
+		if room_gen.rooms[key].status == 'explored':
 			icons[key].texture = explored_icon
-		if room_generator.rooms[key].status == 'current':
+		if room_gen.rooms[key].status == 'current':
 			icons[key].texture = current_icon

@@ -7,3 +7,4 @@ res://scenes/prefabs/enemies/enemy.tscn
 res://scenes/prefabs/room_generator.tscn
 res://scenes/prefabs/room_minimap.tscn
 res://scripts/room_generator.gd
+res://scripts/minimap_displayer.gd
