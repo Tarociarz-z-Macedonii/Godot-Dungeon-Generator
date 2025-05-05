@@ -3,14 +3,7 @@ res://animations_and_tilesets/tileset.tres
 res://animations_and_tilesets/player_frames.tres
 res://scripts/camera.gd
 res://scenes/prefabs/player.tscn
-res://scenes/prefabs/enemy.tscn
+res://scenes/prefabs/enemies/enemy.tscn
 res://scenes/prefabs/room_generator.tscn
 res://scenes/prefabs/room_minimap.tscn
-res://scenes/prefabs/rooms/boss1.tscn
-res://scenes/prefabs/enemies/boss_1.tscn
-res://scenes/prefabs/rooms/boss_1.tscn
-res://scenes/prefabs/enemies/enemy.tscn
-res://scripts/room_list.gd
-res://scripts/room.gd
 res://scripts/room_generator.gd
-res://scripts/minimap_displayer.gd
