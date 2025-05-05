@@ -1,17 +1,19 @@
 extends Node2D
 
-var max_num_rooms: int = 20 #inclusive
-var min_num_rooms: int  = 20 #inclusive
-var chance_for_room: float  = 0.5 #0.5 = 50%
-var max_neighbours: int  = 1 #inclusive
-var room_level: int  = 1
-var room_cell_width: int = 30
-var room_cell_height: int = 22
-var starting_cords := Vector2(0,0)
-var max_x_grid: int = 4 #inclusive
-var min_x_grid: int = -4 #inclusive
-var max_y_grid: int = 4 #inclusive
-var min_y_grid: int = -4 #inclusive
+@export var max_num_rooms: int = 20 #inclusive
+@export var min_num_rooms: int  = 20 #inclusive
+@export var chance_for_room: float  = 0.5 #0.5 = 50%
+@export var max_neighbours: int  = 1 #inclusive
+@export var room_level: int  = 1
+@export var room_cell_width: int = 30
+@export var room_cell_height: int = 22
+@export var starting_cords := Vector2(0,0)
+@export var max_x_grid: int = 4 #inclusive
+@export var min_x_grid: int = -4 #inclusive
+@export var max_y_grid: int = 4 #inclusive
+@export var min_y_grid: int = -4 #inclusive
+@export var min_chest_room_num: int = 1 #inclusive
+@export var max_chest_room_num: int = 1 #inclusive
 
 var room = preload("res://scenes/prefabs/room.tscn")
 var rooms = {} 
@@ -24,6 +26,7 @@ var room_width: int = room_cell_width * 16
 var room_height: int =  room_cell_height * 16
 var offset_x: int = starting_cords.x * -room_width
 var offset_y: int = starting_cords.y * -room_height 
+var chest_room_num
 
 func _ready() -> void:
 	minimap_displayer = get_node("MinimapDisplayer")
@@ -103,12 +106,7 @@ func restart():
 	
 func _assign_final_room_values():
 	print("Rooms: " + str(len(rooms)) + " EndRooms: " + str(len(end_rooms)))
-	
-	for key in rooms:
-		rooms[key].type = Enums.RoomType.ENEMY
-	rooms[end_rooms.pop_back()].type = Enums.RoomType.BOSS
-	rooms[end_rooms.pop_back()].type = Enums.RoomType.CHEST
-	
+	_assign_room_types()
 	for key in rooms:
 		rooms[key].cords = key
 		rooms[key].status = "unexplored"
@@ -117,6 +115,18 @@ func _assign_final_room_values():
 		rooms[key].instantiate_interior()
 		_assign_openings(key, rooms[key])
 		rooms[key].make_corridors()
+
+func _assign_room_types():
+	for key in rooms:
+		rooms[key].type = Enums.RoomType.ENEMY
+		
+	rooms[end_rooms.pop_back()].type = Enums.RoomType.BOSS
+	chest_room_num = randi_range(min_chest_room_num, max_chest_room_num)
+	for i in range(chest_room_num):
+		if len(end_rooms) > 0:
+			var rand_index = randi_range(0, len(end_rooms) - 1)
+			rooms[end_rooms[rand_index]].type = Enums.RoomType.CHEST
+			end_rooms.remove_at(rand_index)
 
 func _assign_openings(cords, temp_room):
 	if is_room_existing(Vector2(cords.x + 1, cords.y)):
