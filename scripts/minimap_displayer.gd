@@ -5,6 +5,7 @@ var current_icon = preload('res://sprites/current_room_icon.png')
 var explored_icon = preload('res://sprites/room_discovered.png')
 var unexplored_icon = preload('res://sprites/unexplored.png')
 var chest_icon = preload("res://sprites/chest_icon.png")
+var skull_icon = preload("res://sprites/skull_icon.png")
 
 var minimap_offset_x 
 var minimap_offset_y 
@@ -41,6 +42,8 @@ func pick_icon(type):
 	match type:
 		Enums.RoomType.CHEST:
 			return chest_icon
+		Enums.RoomType.BOSS:
+			return skull_icon
 		Enums.RoomType.ENEMY:
 			return null
 

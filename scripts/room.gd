@@ -72,7 +72,7 @@ func on_hitbox_enter():
 		minimap_displayer.on_room_change(cords)
 
 func _on_enemy_room_enter():
-	if type == Enums.RoomType.ENEMY:
+	if type == Enums.RoomType.ENEMY or type == Enums.RoomType.BOSS:
 		var enemies_layer: TileMapLayer = interior_instance.get_node("Enemies")
 		enemies_layer.enabled = true
 		enemy_count = len(enemies_layer.get_used_cells())
@@ -81,6 +81,5 @@ func _on_enemy_room_enter():
 		
 func on_enemy_death():
 	enemy_count -= 1
-	print(enemy_count)
 	if enemy_count <= 0:
 		unblock_doors()

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dcp4mj0e2d3g7"]
+
+[ext_resource type="Script" uid="uid://drf2tmdt257ng" path="res://scripts/enemy.gd" id="1_5cjah"]
+[ext_resource type="Texture2D" uid="uid://dhlsnju2442dq" path="res://icon.svg" id="2_1ysuf"]
+
+[node name="Boss1" type="CharacterBody2D"]
+scale = Vector2(0.3, 0.3)
+script = ExtResource("1_5cjah")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_1ysuf")
